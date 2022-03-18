@@ -1,11 +1,11 @@
------ Criação do banco de dados -----
+----- CriaÃ§Ã£o do banco de dados -----
 
-CREATE DATABASE bdTryCatch
-USE bdTryCatch
+CREATE DATABASE teste
+USE teste
 
 -- Slide 2 --
 
------ Criação das tabelas -----
+----- CriaÃ§Ã£o das tabelas -----
 
 CREATE TABLE tbProblemas (
 	principalProblema VARCHAR(15) NOT NULL,
@@ -17,64 +17,64 @@ CREATE TABLE tbOutros (
 	numPessoas INT NOT NULL
 );
 
------ Inserção de dados -----
+----- InserÃ§Ã£o de dados -----
 
 INSERT INTO tbProblemas
-VALUES ('Segurança', 232),
+VALUES ('SeguranÃ§a', 232),
        ('Emprego', 200),
-	   ('Saúde', 176),
-	   ('Educação', 88),
+	   ('SaÃºde', 176),
+	   ('EducaÃ§Ã£o', 88),
 	   ('Outros', 104),
 	   ('Total', 800)
 
------ Realização do try catch -----
+----- RealizaÃ§Ã£o do try catch -----
 
-CREATE PROCEDURE Problemas(@categoria VARCHAR(15), @percentual VARCHAR(03))
+CREATE PROCEDURE Problemas(@categoria VARCHAR(15))
 AS
 BEGIN
+	DECLARE @percentual VARCHAR(03)
 	BEGIN TRY
-		IF @categoria = 'Segurança'
+		IF @categoria = 'SeguranÃ§a'
 			BEGIN
 				SET @percentual = 232 * 100 / 800
-				SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Segurança'
+				SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'SeguranÃ§a'
 			END
 		ELSE IF @categoria = 'Emprego'
 			BEGIN
 				SET @percentual = 200 * 100 / 800
-				SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Emprego'
+				SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Emprego'
 			END
-		ELSE IF @categoria = 'Saúde'
+		ELSE IF @categoria = 'SaÃºde'
 			BEGIN
 				SET @percentual = 176 * 100 / 800
-				SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Saúde'
+				SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'SaÃºde'
 			END
-		ELSE IF @categoria = 'Educação'
+		ELSE IF @categoria = 'EducaÃ§Ã£o'
 			BEGIN
 				SET @percentual = 88 * 100 / 800
-				SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Educação'
+				SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'EducaÃ§Ã£o'
 			END
 		ELSE IF @categoria = 'Total'
 			BEGIN
 				SET @percentual = 800 * 100 / 800
-				SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Total'
+				SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Total'
 			END
 		ELSE
 			PRINT 1/0
 	END TRY
 	BEGIN CATCH
 		SET @percentual = 104 * 100 / 800
-		SELECT numPessoas AS 'Número de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Outros'
+		SELECT numPessoas AS 'NÃºmero de Pessoas', @percentual + '%' AS 'Percentual do Total' FROM tbProblemas WHERE principalProblema = 'Outros'
 		INSERT INTO tbOutros VALUES (@categoria, @percentual)
 	END CATCH
 END
 
-DECLARE @percentual VARCHAR
-EXECUTE Problemas 'Teste', @percentual
+EXECUTE Problemas 'Teste'
 
 
 -- Slide 3 --
 
------ Criação das tabelas -----
+----- CriaÃ§Ã£o das tabelas -----
 
 CREATE TABLE tbDespesas (
 	Mes VARCHAR(10) NOT NULL,
@@ -88,23 +88,23 @@ CREATE TABLE tbErros (
 	Mensagem VARCHAR(100) NOT NULL
 );
 
------ Inserção de dados -----
+----- InserÃ§Ã£o de dados -----
 
 INSERT INTO tbDespesas
 VALUES ('Janeiro', 'Transporte', 74),
        ('Janeiro', 'Supermercado', 235),
-	   ('Janeiro', 'Despesas domésticas', 175),
+	   ('Janeiro', 'Despesas domÃ©sticas', 175),
 	   ('Janeiro', 'Entretenimento', 100),
 	   ('Fevereiro', 'Transporte', 115),
 	   ('Fevereiro', 'Supermercado', 240),
-	   ('Fevereiro', 'Despesas domésticas', 225),
+	   ('Fevereiro', 'Despesas domÃ©sticas', 225),
 	   ('Fevereiro', 'Entretenimento', 125),
-	   ('Março', 'Transporte', 90),
-	   ('Março', 'Supermercado', 260),
-	   ('Março', 'Despesas domésticas', 200),
-	   ('Março', 'Entretenimento', 120)
+	   ('MarÃ§o', 'Transporte', 90),
+	   ('MarÃ§o', 'Supermercado', 260),
+	   ('MarÃ§o', 'Despesas domÃ©sticas', 200),
+	   ('MarÃ§o', 'Entretenimento', 120)
 
------ Realização do try catch -----
+----- RealizaÃ§Ã£o do try catch -----
 
 CREATE PROCEDURE somaGastos(@categoria VARCHAR(50))
 AS
@@ -114,8 +114,8 @@ BEGIN
 			SELECT 'R$ ' + CAST(SUM(valor) AS VARCHAR) AS 'Soma dos Gastos com Transporte' FROM tbDespesas WHERE categoria = 'Transporte'
 		ELSE IF @categoria = 'Supermercado'
 			SELECT 'R$ ' + CAST(SUM(valor) AS VARCHAR) AS 'Soma dos Gastos com Supermercado' FROM tbDespesas WHERE categoria = 'Supermercado'
-		ELSE IF @categoria = 'Despesas domésticas'
-			SELECT 'R$ ' + CAST(SUM(valor) AS VARCHAR) AS 'Soma dos Gastos com Despesas domésticas' FROM tbDespesas WHERE categoria = 'Despesas domésticas'
+		ELSE IF @categoria = 'Despesas domÃ©sticas'
+			SELECT 'R$ ' + CAST(SUM(valor) AS VARCHAR) AS 'Soma dos Gastos com Despesas domÃ©sticas' FROM tbDespesas WHERE categoria = 'Despesas domÃ©sticas'
 		ELSE IF @categoria = 'Entretenimento'
 			SELECT 'R$ ' + CAST(SUM(valor) AS VARCHAR) AS 'Soma dos Gastos com Entretenimento' FROM tbDespesas WHERE categoria = 'Entretenimento'
 		ELSE
